@@ -1,0 +1,30 @@
+name: ecommerce_app
+description: E-Commerce Flutter App like Amazon/Flipkart
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # Core packages only - no Firebase for now
+  provider: ^6.0.5
+  cupertino_icons: ^1.0.2
+  
+  # UI and utility packages
+  intl: ^0.18.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/icons/
