@@ -1,23 +1,42 @@
-# Flutter E-Commerce App 🛍️
+# 🛒 Flutter E-Commerce App
 
-एक complete e-commerce mobile application Flutter और Firebase के साथ बनाई गई है. यह Amazon/Flipkart जैसे apps के समान features provide करती है.
+A modern, feature-rich e-commerce application built with Flutter, inspired by Amazon and Flipkart's user interface and functionality.
+
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
 
 ## 🚀 Features
 
-### User Features
-- ✅ **Authentication**: Google Sign-In और Email/Password login
-- ✅ **Product Catalog**: Products की complete list with images
-- ✅ **Search & Filter**: Products को आसानी से ढूंढें
-- ✅ **Shopping Cart**: Products को cart में add करें
-- ✅ **Order Placement**: आसान checkout process
-- ✅ **Real-time Order Tracking**: Stepper UI के साथ order status track करें
-- ✅ **Order History**: पुराने orders की complete history
+### 🔐 **Authentication System**
+- **Login Screen** with email/password authentication
+- **Signup Screen** with comprehensive form validation
+- **Demo Login** functionality for testing
+- **Password visibility toggle** for better UX
+- **Terms & Conditions** acceptance
 
-### Admin Features
-- ✅ **Product Management**: नए products add/edit/delete करें
-- ✅ **Order Management**: सभी orders को manage करें
-- ✅ **Order Status Updates**: Real-time में order status update करें
-- ✅ **Dashboard**: Sales और analytics देखें
+### 🛍️ **Shopping Experience**
+- **Product Catalog** with multiple categories
+  - Electronics
+  - Fashion 
+  - Home & Garden
+- **Shopping Cart** with add/remove functionality
+- **Real-time cart updates** and quantity management
+- **Professional UI** inspired by Amazon/Flipkart
+
+### 👤 **User Profile Management**
+- **Profile Dropdown Menu** with all essential options
+- **Orders Page** - Track your purchase history
+- **Wishlist Page** - Save favorite items  
+- **Rewards Page** - Loyalty program integration
+- **Profile Settings** - Update account information
+
+### 🎨 **Modern UI/UX Design**
+- **Material Design 3** components
+- **Responsive layouts** for all screen sizes
+- **Professional color schemes** matching e-commerce standards
+- **Smooth animations** and transitions
+- **Clean, intuitive navigation**
 
 ### Order Tracking Statuses
 1. **Order Placed** (ऑर्डर प्लेस किया गया)
