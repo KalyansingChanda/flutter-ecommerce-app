@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'कोणतेही प्रोडक्ट्स नाहीत',
+                    'No products available',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.grey,
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'आमची उत्पादने',
+                  'Our Products',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,

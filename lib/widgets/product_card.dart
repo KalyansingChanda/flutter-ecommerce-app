@@ -86,7 +86,7 @@ class ProductCard extends StatelessWidget {
                               // Show snackbar that item is already in cart
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('आधीच कार्टमध्ये आहे'),
+                                  content: Text('Already in cart'),
                                   duration: Duration(seconds: 1),
                                 ),
                               );
@@ -94,7 +94,7 @@ class ProductCard extends StatelessWidget {
                               cartProvider.addItem(product);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('कार्टमध्ये जोडले'),
+                                  content: Text('Added to cart'),
                                   duration: Duration(seconds: 1),
                                 ),
                               );
@@ -105,7 +105,7 @@ class ProductCard extends StatelessWidget {
                             backgroundColor: isInCart ? Colors.grey : null,
                           ),
                           child: Text(
-                            isInCart ? 'कार्टमध्ये आहे' : 'कार्टमध्ये जोडा',
+                            isInCart ? 'In Cart' : 'Add to Cart',
                             style: const TextStyle(fontSize: 12),
                           ),
                         ),

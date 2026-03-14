@@ -7,17 +7,17 @@ class AppConstants {
 
   // Order Status Messages
   static const Map<int, String> orderStatusMessages = {
-    0: 'तुमचा ऑर्डर प्लेस झाला आहे',
-    1: 'तुमचा ऑर्डर पैक केला जात आहे',
-    2: 'तुमचा ऑर्डर शिप केला गेला आहे',
-    3: 'तुमचा ऑर्डर डिलिव्हरीसाठी निघाला आहे',
-    4: 'तुमचा ऑर्डर डिलिव्हर झाला आहे',
+    0: 'Your order has been placed',
+    1: 'Your order is being packed',
+    2: 'Your order has been shipped',
+    3: 'Your order is out for delivery',
+    4: 'Your order has been delivered',
   };
 
   // App Strings
   static const String appName = 'E-Commerce App';
-  static const String welcomeMessage = 'स्वागत आहे!';
-  static const String loginPrompt = 'कृपया लॉगिन करा';
+  static const String welcomeMessage = 'Welcome!';
+  static const String loginPrompt = 'Please login';
   
   // Product Categories
   static const List<String> categories = [
@@ -32,7 +32,7 @@ class AppConstants {
   ];
 
   // Error Messages
-  static const String networkError = 'इंटरनेट कनेक्शन चेक करा';
-  static const String unknownError = 'काहीतरी चूक झाली आहे';
-  static const String loginRequired = 'कृपया पहिले लॉगिन करा';
+  static const String networkError = 'Check internet connection';
+  static const String unknownError = 'Something went wrong';
+  static const String loginRequired = 'Please login first';
 }

@@ -1,45 +1,35 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/order.dart' as app_order;
 import '../utils/constants.dart';
 
 class OrderService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // Mock service for non-Firebase version
 
   Future<String> createOrder(app_order.Order order) async {
     try {
-      final docRef = await _firestore
-          .collection(AppConstants.ordersCollection)
-          .add(order.toMap());
-      return docRef.id;
+      // Mock implementation - return fake order ID
+      await Future.delayed(const Duration(milliseconds: 500));
+      return 'mock_order_${DateTime.now().millisecondsSinceEpoch}';
     } catch (e) {
-      throw Exception('ऑर्डर तयार करण्यात अयशस्वी: $e');
+      throw Exception('Failed to create order: $e');
     }
   }
 
   Future<List<app_order.Order>> getUserOrders(String userId) async {
     try {
-      final QuerySnapshot snapshot = await _firestore
-          .collection(AppConstants.ordersCollection)
-          .where('userId', isEqualTo: userId)
-          .orderBy('timestamp', descending: true)
-          .get();
-
-      return snapshot.docs
-          .map((doc) => app_order.Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
-          .toList();
+      // Mock implementation - return empty list
+      await Future.delayed(const Duration(milliseconds: 500));
+      return <app_order.Order>[];
     } catch (e) {
-      throw Exception('वापरकर्त्याचे ऑर्डर मिळविण्यात अयशस्वी: $e');
+      throw Exception('Failed to get user orders: $e');
     }
   }
 
   Future<void> updateOrderStatus(String orderId, app_order.OrderStatus status) async {
     try {
-      await _firestore
-          .collection(AppConstants.ordersCollection)
-          .doc(orderId)
-          .update({'status': status.index});
+      // Mock implementation
+      await Future.delayed(const Duration(milliseconds: 500));
     } catch (e) {
-      throw Exception('ऑर्डर स्टेटस अपडेट करण्यात अयशस्वी: $e');
+      throw Exception('Failed to update order status: $e');
     }
   }
 }

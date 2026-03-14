@@ -63,7 +63,7 @@ class ProductProvider with ChangeNotifier {
     try {
       _products = await _productService.getAllProducts();
     } catch (e) {
-      _errorMessage = 'उत्पादने लोड करण्यात अयशस्वी: ${e.toString()}';
+      _errorMessage = 'Failed to load products: ${e.toString()}';
     }
 
     _isLoading = false;
@@ -77,7 +77,7 @@ class ProductProvider with ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _errorMessage = 'उत्पादन जोडण्यात अयशस्वी: ${e.toString()}';
+      _errorMessage = 'Failed to add product: ${e.toString()}';
       notifyListeners();
       return false;
     }
@@ -93,7 +93,7 @@ class ProductProvider with ChangeNotifier {
       }
       return true;
     } catch (e) {
-      _errorMessage = 'उत्पादन अपडेट करण्यात अयशस्वी: ${e.toString()}';
+      _errorMessage = 'Failed to update product: ${e.toString()}';
       notifyListeners();
       return false;
     }
@@ -106,7 +106,7 @@ class ProductProvider with ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _errorMessage = 'उत्पादन हटविण्यात अयशस्वी: ${e.toString()}';
+      _errorMessage = 'Failed to delete product: ${e.toString()}';
       notifyListeners();
       return false;
     }

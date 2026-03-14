@@ -1,58 +1,39 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/user.dart';
 import '../utils/constants.dart';
 
 class UserService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // Mock service for non-Firebase version
 
   Future<AppUser?> getUser(String uid) async {
     try {
-      final doc = await _firestore
-          .collection(AppConstants.usersCollection)
-          .doc(uid)
-          .get();
-
-      if (doc.exists) {
-        return AppUser.fromMap(doc.data()!, doc.id);
-      }
+      // Mock implementation - return null for now
+      await Future.delayed(const Duration(milliseconds: 500));
       return null;
     } catch (e) {
-      throw Exception('वापरकर्ता मिळविण्यात अयशस्वी: $e');
+      throw Exception('Failed to get user: $e');
     }
   }
 
   Future<void> createUser(AppUser user) async {
     try {
-      await _firestore
-          .collection(AppConstants.usersCollection)
-          .doc(user.uid)
-          .set(user.toMap());
+      // Mock implementation
+      await Future.delayed(const Duration(milliseconds: 500));
     } catch (e) {
-      throw Exception('वापरकर्ता तयार करण्यात अयशस्वी: $e');
+      throw Exception('Failed to create user: $e');
     }
   }
 
   Future<void> updateUser(AppUser user) async {
     try {
-      await _firestore
-          .collection(AppConstants.usersCollection)
-          .doc(user.uid)
-          .update(user.toMap());
+      // Mock implementation
+      await Future.delayed(const Duration(milliseconds: 500));
     } catch (e) {
-      throw Exception('वापरकर्ता अपडेट करण्यात अयशस्वी: $e');
+      throw Exception('Failed to update user: $e');
     }
   }
 
   Stream<AppUser?> getUserStream(String uid) {
-    return _firestore
-        .collection(AppConstants.usersCollection)
-        .doc(uid)
-        .snapshots()
-        .map((doc) {
-      if (doc.exists) {
-        return AppUser.fromMap(doc.data()!, doc.id);
-      }
-      return null;
-    });
+    // Mock implementation - return null stream
+    return Stream.value(null);
   }
 }

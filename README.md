@@ -39,11 +39,11 @@ A modern, feature-rich e-commerce application built with Flutter, inspired by Am
 - **Clean, intuitive navigation**
 
 ### Order Tracking Statuses
-1. **Order Placed** (ऑर्डर प्लेस किया गया)
-2. **Order Packed** (ऑर्डर pack किया गया) 
-3. **Order Shipped** (ऑर्डर ship किया गया)
-4. **Out for Delivery** (डिलिवरी के लिए निकला)
-5. **Delivered** (डिलिवर हो गया)
+1. **Order Placed** 
+2. **Order Packed** 
+3. **Order Shipped** 
+4. **Out for Delivery** 
+5. **Delivered**
 
 ## 🛠️ Tech Stack
 
@@ -98,49 +98,49 @@ lib/
 ### 2. Firebase Setup
 
 #### Step 1: Create Firebase Project
-1. [Firebase Console](https://console.firebase.google.com/) पर जाएं
-2. "Create a project" click करें
-3. Project name: `ecommerce-app` (या कोई भी नाम)
-4. Google Analytics enable करें (optional)
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Click "Create a project"
+3. Project name: `ecommerce-app` (or any name you prefer)
+4. Enable Google Analytics (optional)
 
 #### Step 2: Add Android App
-1. Firebase project में "Add app" click करें
-2. Android icon select करें
+1. Click "Add app" in Firebase project
+2. Select Android icon
 3. Package name: `com.example.ecommerce_app`
-4. `google-services.json` file download करें
-5. इस file को `android/app/` folder में paste करें
+4. Download `google-services.json` file
+5. Paste this file in `android/app/` folder
 
 #### Step 3: Enable Firebase Services
-Firebase Console में जाकर निम्नलिखित services enable करें:
+Go to Firebase Console and enable the following services:
 
 **Authentication:**
 1. Authentication → Sign-in method
-2. Email/Password enable करें
-3. Google Sign-in enable करें
+2. Enable Email/Password
+3. Enable Google Sign-in
 
 **Firestore Database:**
 1. Firestore Database → Create database
-2. Test mode में start करें
-3. Location: asia-south1 (Mumbai) select करें
+2. Start in test mode
+3. Select Location: asia-south1 (Mumbai)
 
 **Storage:**
 1. Storage → Get started
-2. Test mode में start करें
+2. Start in test mode
 
 ### 3. Install Dependencies
 
 ```bash
-# Project folder में जाएं
+# Go to project folder
 cd E-Coommerce
 
-# Dependencies install करें
+# Install dependencies
 flutter pub get
 ```
 
 ### 4. Run the App
 
 ```bash
-# Android emulator या device connect करें
+# Connect Android emulator or device
 flutter run
 ```
 
@@ -229,10 +229,10 @@ Stepper(
 ## 🚀 Build APK
 
 ```bash
-# Release APK build करने के लिए
+# To build release APK
 flutter build apk --release
 
-# APK file यहाँ मिलेगी:
+# APK file will be available at:
 # build/app/outputs/flutter-apk/app-release.apk
 ```
 
@@ -269,33 +269,33 @@ service cloud.firestore {
 
 ## 🎯 Next Steps
 
-1. **Firebase Configuration**: `google-services.json` को actual Firebase project की file से replace करें
-2. **Admin Panel**: Admin dashboard screens बनाएं
-3. **Payment Gateway**: Razorpay या Stripe integration करें
-4. **Push Notifications**: Order updates के लिए notifications add करें
-5. **Search**: Advanced search और filtering features
-6. **Categories**: Product categories और filtering
+1. **Firebase Configuration**: Replace `google-services.json` with actual Firebase project file
+2. **Admin Panel**: Create admin dashboard screens
+3. **Payment Gateway**: Integrate Razorpay or Stripe
+4. **Push Notifications**: Add notifications for order updates
+5. **Search**: Advanced search and filtering features
+6. **Categories**: Product categories and filtering
 
 ## 🆘 Troubleshooting
 
 ### Common Issues:
 
-1. **Firebase not connecting**: `google-services.json` file check करें
-2. **Build errors**: `flutter clean` और `flutter pub get` run करें
-3. **Auth issues**: Firebase Console में authentication methods enable करें
-4. **Firestore permission denied**: Security rules check करें
+1. **Firebase not connecting**: Check `google-services.json` file
+2. **Build errors**: Run `flutter clean` and `flutter pub get`
+3. **Auth issues**: Enable authentication methods in Firebase Console
+4. **Firestore permission denied**: Check security rules
 
 ### Debug Commands:
 ```bash
-flutter doctor          # Flutter setup check करें
-flutter clean          # Build cache clean करें
-flutter pub get        # Dependencies refresh करें
-flutter run --verbose  # Detailed logs के साथ run करें
+flutter doctor          # Check Flutter setup
+flutter clean          # Clean build cache
+flutter pub get        # Refresh dependencies
+flutter run --verbose  # Run with detailed logs
 ```
 
 ## 📞 Support
 
-कोई भी problem हो तो GitHub issues में पूछ सकते हैं या documentation देखें:
+For any problems, you can ask in GitHub issues or check the documentation:
 
 - [Flutter Documentation](https://docs.flutter.dev/)
 - [Firebase Documentation](https://firebase.google.com/docs)

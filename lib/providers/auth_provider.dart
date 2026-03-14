@@ -1,10 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../models/user.dart';
 import '../services/user_service.dart';
 
 class AuthProvider with ChangeNotifier {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final UserService _userService = UserService();
 
   AppUser? _user;
@@ -14,25 +12,29 @@ class AuthProvider with ChangeNotifier {
   String? get errorMessage => _errorMessage;
 
   Future<void> checkAuthState() async {
-    final User? firebaseUser = _auth.currentUser;
-    if (firebaseUser != null) {
-      _user = await _userService.getUser(firebaseUser.uid);
-    }
+    // Mock implementation - no persistent auth state
     notifyListeners();
   }
 
   Future<bool> signInWithEmail(String email, String password) async {
     try {
       _errorMessage = null;
-      final UserCredential result = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      if (result.user != null) {
-        _user = await _userService.getUser(result.user!.uid);
+      await Future.delayed(const Duration(milliseconds: 500));
+      
+      // Mock authentication - accept demo credentials
+      if (email == 'demo@example.com' && password == 'password123') {
+        _user = AppUser(
+          uid: 'demo_user_123',
+          name: 'Demo User',
+          email: email,
+          createdAt: DateTime.now(),
+        );
         notifyListeners();
         return true;
+      } else {
+        _errorMessage = 'Invalid email or password';
+        notifyListeners();
+        return false;
       }
     } catch (e) {
       _errorMessage = _getErrorMessage(e.toString());
@@ -44,24 +46,20 @@ class AuthProvider with ChangeNotifier {
   Future<bool> signUpWithEmail(String email, String password, String name) async {
     try {
       _errorMessage = null;
-      final UserCredential result = await _auth.createUserWithEmailAndPassword(
+      await Future.delayed(const Duration(milliseconds: 500));
+      
+      // Mock registration - always succeed
+      final newUser = AppUser(
+        uid: 'user_${DateTime.now().millisecondsSinceEpoch}',
+        name: name,
         email: email,
-        password: password,
+        createdAt: DateTime.now(),
       );
 
-      if (result.user != null) {
-        final newUser = AppUser(
-          uid: result.user!.uid,
-          name: name,
-          email: email,
-          createdAt: DateTime.now(),
-        );
-
-        await _userService.createUser(newUser);
-        _user = newUser;
-        notifyListeners();
-        return true;
-      }
+      await _userService.createUser(newUser);
+      _user = newUser;
+      notifyListeners();
+      return true;
     } catch (e) {
       _errorMessage = _getErrorMessage(e.toString());
       notifyListeners();
@@ -70,7 +68,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
+    await Future.delayed(const Duration(milliseconds: 200));
     _user = null;
     _errorMessage = null;
     notifyListeners();
@@ -78,16 +76,16 @@ class AuthProvider with ChangeNotifier {
 
   String _getErrorMessage(String error) {
     if (error.contains('user-not-found')) {
-      return 'वापरकर्ता सापडला नाही';
+      return 'User not found';
     } else if (error.contains('wrong-password')) {
-      return 'चुकीचा पासवर्ड';
+      return 'Wrong password';
     } else if (error.contains('email-already-in-use')) {
-      return 'हा ईमेल आधीच वापरला आहे';
+      return 'Email already in use';
     } else if (error.contains('weak-password')) {
-      return 'पासवर्ड कमकुवत आहे';
+      return 'Password is too weak';
     } else if (error.contains('invalid-email')) {
-      return 'चुकीचा ईमेल';
+      return 'Invalid email';
     }
-    return 'काहीतरी चूक झाली';
+    return 'Something went wrong';
   }
 }

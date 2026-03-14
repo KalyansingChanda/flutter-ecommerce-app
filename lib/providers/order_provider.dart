@@ -21,7 +21,7 @@ class OrderProvider with ChangeNotifier {
     try {
       _orders = await _orderService.getUserOrders(userId);
     } catch (e) {
-      _errorMessage = 'ऑर्डर लोड करण्यात अयशस्वी: ${e.toString()}';
+      _errorMessage = 'Failed to load orders: ${e.toString()}';
     }
 
     _isLoading = false;
@@ -35,7 +35,7 @@ class OrderProvider with ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _errorMessage = 'ऑर्डर प्लेस करण्यात अयशस्वी: ${e.toString()}';
+      _errorMessage = 'Failed to place order: ${e.toString()}';
       notifyListeners();
       return false;
     }
@@ -61,10 +61,9 @@ class OrderProvider with ChangeNotifier {
       }
       return true;
     } catch (e) {
-      _errorMessage = 'ऑर्डर स्टेटस अपडेट करण्यात अयशस्वी: ${e.toString()}';
+      _errorMessage = 'Failed to update order status: ${e.toString()}';
       notifyListeners();
       return false;
     }
   }
-}
 }

@@ -1,5 +1,3 @@
-import 'product.dart';
-
 enum OrderStatus {
   placed,    // 0 - Order Placed
   packed,    // 1 - Order Packed  
