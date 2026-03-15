@@ -1,30 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// Define AuthUserProvider here temporarily
-class AuthUserProvider extends ChangeNotifier {
-  String? _userName;
-  String? _userEmail;
-  bool _isLoggedIn = false;
-
-  String? get userName => _userName;
-  String? get userEmail => _userEmail;
-  bool get isLoggedIn => _isLoggedIn;
-
-  void login(String name, String email) {
-    _userName = name;
-    _userEmail = email;
-    _isLoggedIn = true;
-    notifyListeners();
-  }
-
-  void logout() {
-    _userName = null;
-    _userEmail = null;
-    _isLoggedIn = false;
-    notifyListeners();
-  }
-}
+import '../../providers/auth_user_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

@@ -149,4 +149,158 @@ class ProfilePage extends StatelessWidget {
             subtitle: 'Manage cards and wallets',
             onTap: () {},
           ),
-        ],\n      ),\n    );\n  }\n\n  Widget _buildAccountSection() {\n    return Card(\n      child: Column(\n        children: [\n          Padding(\n            padding: const EdgeInsets.all(16),\n            child: Row(\n              children: [\n                const Icon(Icons.account_circle, color: Colors.blue),\n                const SizedBox(width: 12),\n                const Text(\n                  'Account Settings',\n                  style: TextStyle(\n                    fontSize: 16,\n                    fontWeight: FontWeight.bold,\n                  ),\n                ),\n              ],\n            ),\n          ),\n          const Divider(height: 1),\n          _buildMenuItem(\n            icon: Icons.person_outline,\n            title: 'Edit Profile',\n            subtitle: 'Update your personal information',\n            onTap: () {},\n          ),\n          const Divider(height: 1),\n          _buildMenuItem(\n            icon: Icons.security_outlined,\n            title: 'Privacy & Security',\n            subtitle: 'Password, privacy settings',\n            onTap: () {},\n          ),\n          const Divider(height: 1),\n          _buildMenuItem(\n            icon: Icons.notifications_outlined,\n            title: 'Notifications',\n            subtitle: 'Manage notification preferences',\n            onTap: () {},\n          ),\n        ],\n      ),\n    );\n  }\n\n  Widget _buildSupportSection() {\n    return Card(\n      child: Column(\n        children: [\n          Padding(\n            padding: const EdgeInsets.all(16),\n            child: Row(\n              children: [\n                const Icon(Icons.help_outline, color: Colors.blue),\n                const SizedBox(width: 12),\n                const Text(\n                  'Support & Legal',\n                  style: TextStyle(\n                    fontSize: 16,\n                    fontWeight: FontWeight.bold,\n                  ),\n                ),\n              ],\n            ),\n          ),\n          const Divider(height: 1),\n          _buildMenuItem(\n            icon: Icons.help_center_outlined,\n            title: 'Help Center',\n            subtitle: 'FAQs and support',\n            onTap: () {},\n          ),\n          const Divider(height: 1),\n          _buildMenuItem(\n            icon: Icons.chat_outlined,\n            title: 'Contact Us',\n            subtitle: 'Get in touch with our team',\n            onTap: () {},\n          ),\n          const Divider(height: 1),\n          _buildMenuItem(\n            icon: Icons.description_outlined,\n            title: 'Terms & Conditions',\n            subtitle: 'Read our terms of service',\n            onTap: () {},\n          ),\n          const Divider(height: 1),\n          _buildMenuItem(\n            icon: Icons.privacy_tip_outlined,\n            title: 'Privacy Policy',\n            subtitle: 'How we protect your data',\n            onTap: () {},\n          ),\n          const Divider(height: 1),\n          _buildMenuItem(\n            icon: Icons.info_outline,\n            title: 'About',\n            subtitle: 'App version and info',\n            onTap: () => _showAboutDialog(),\n          ),\n          const Divider(height: 1),\n          _buildMenuItem(\n            icon: Icons.logout,\n            title: 'Logout',\n            subtitle: 'Sign out of your account',\n            onTap: () => _showLogoutDialog(),\n            titleColor: Colors.red,\n          ),\n        ],\n      ),\n    );\n  }\n\n  Widget _buildMenuItem({\n    required IconData icon,\n    required String title,\n    required String subtitle,\n    required VoidCallback onTap,\n    Color? titleColor,\n  }) {\n    return ListTile(\n      leading: Icon(icon, color: titleColor ?? Colors.grey[700]),\n      title: Text(\n        title,\n        style: TextStyle(\n          fontWeight: FontWeight.w500,\n          color: titleColor,\n        ),\n      ),\n      subtitle: Text(\n        subtitle,\n        style: TextStyle(\n          fontSize: 12,\n          color: Colors.grey[600],\n        ),\n      ),\n      trailing: const Icon(Icons.arrow_forward_ios, size: 16),\n      onTap: onTap,\n    );\n  }\n\n  void _showAboutDialog() {\n    // This would typically show app info\n  }\n\n  void _showLogoutDialog() {\n    // This would typically show logout confirmation\n  }\n}
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAccountSection() {
+    return Card(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                const Icon(Icons.account_circle, color: Colors.blue),
+                const SizedBox(width: 12),
+                const Text(
+                  'Account Settings',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Divider(height: 1),
+          _buildMenuItem(
+            icon: Icons.person_outline,
+            title: 'Edit Profile',
+            subtitle: 'Update your personal information',
+            onTap: () {},
+          ),
+          const Divider(height: 1),
+          _buildMenuItem(
+            icon: Icons.security_outlined,
+            title: 'Privacy & Security',
+            subtitle: 'Password, privacy settings',
+            onTap: () {},
+          ),
+          const Divider(height: 1),
+          _buildMenuItem(
+            icon: Icons.notifications_outlined,
+            title: 'Notifications',
+            subtitle: 'Manage notification preferences',
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSupportSection() {
+    return Card(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                const Icon(Icons.help_outline, color: Colors.blue),
+                const SizedBox(width: 12),
+                const Text(
+                  'Support & Legal',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Divider(height: 1),
+          _buildMenuItem(
+            icon: Icons.help_center_outlined,
+            title: 'Help Center',
+            subtitle: 'FAQs and support',
+            onTap: () {},
+          ),
+          const Divider(height: 1),
+          _buildMenuItem(
+            icon: Icons.chat_outlined,
+            title: 'Contact Us',
+            subtitle: 'Get in touch with our team',
+            onTap: () {},
+          ),
+          const Divider(height: 1),
+          _buildMenuItem(
+            icon: Icons.description_outlined,
+            title: 'Terms & Conditions',
+            subtitle: 'Read our terms of service',
+            onTap: () {},
+          ),
+          const Divider(height: 1),
+          _buildMenuItem(
+            icon: Icons.privacy_tip_outlined,
+            title: 'Privacy Policy',
+            subtitle: 'How we protect your data',
+            onTap: () {},
+          ),
+          const Divider(height: 1),
+          _buildMenuItem(
+            icon: Icons.info_outline,
+            title: 'About',
+            subtitle: 'App version and info',
+            onTap: () => _showAboutDialog(),
+          ),
+          const Divider(height: 1),
+          _buildMenuItem(
+            icon: Icons.logout,
+            title: 'Logout',
+            subtitle: 'Sign out of your account',
+            onTap: () => _showLogoutDialog(),
+            titleColor: Colors.red,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMenuItem({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+    Color? titleColor,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: titleColor ?? Colors.grey[700]),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          color: titleColor,
+        ),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: TextStyle(
+          fontSize: 12,
+          color: Colors.grey[600],
+        ),
+      ),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+      onTap: onTap,
+    );
+  }
+
+  void _showAboutDialog() {
+    // This would typically show app info
+  }
+
+  void _showLogoutDialog() {
+    // This would typically show logout confirmation
+  }
+}

@@ -1,5 +1,4 @@
 import '../models/product.dart';
-import '../utils/constants.dart';
 
 class ProductService {
   // Mock service for non-Firebase version

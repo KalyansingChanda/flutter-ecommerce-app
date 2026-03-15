@@ -1,1 +1,554 @@
-import 'package:flutter/material.dart';\nimport 'package:provider/provider.dart';\nimport '../../main_final.dart';\n\nclass ProfileSettingsPage extends StatefulWidget {\n  const ProfileSettingsPage({super.key});\n\n  @override\n  State<ProfileSettingsPage> createState() => _ProfileSettingsPageState();\n}\n\nclass _ProfileSettingsPageState extends State<ProfileSettingsPage> {\n  final _nameController = TextEditingController();\n  final _emailController = TextEditingController();\n  final _phoneController = TextEditingController();\n  final _addressController = TextEditingController();\n  bool _notificationsEnabled = true;\n  bool _emailUpdates = false;\n  bool _smsUpdates = true;\n\n  @override\n  void initState() {\n    super.initState();\n    final authProvider = Provider.of<AuthUserProvider>(context, listen: false);\n    _nameController.text = authProvider.userName ?? '';\n    _emailController.text = authProvider.userEmail ?? '';\n    _phoneController.text = '+91 9876543210'; // Demo phone\n    _addressController.text = 'Demo Address, Mumbai, Maharashtra - 400001';\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    final authProvider = Provider.of<AuthUserProvider>(context);\n    \n    return Scaffold(\n      appBar: AppBar(\n        backgroundColor: Colors.blue,\n        foregroundColor: Colors.white,\n        title: const Text('Profile Settings'),\n        elevation: 0,\n      ),\n      body: Container(\n        decoration: BoxDecoration(\n          gradient: LinearGradient(\n            begin: Alignment.topCenter,\n            end: Alignment.bottomCenter,\n            colors: [Colors.blue.shade50, Colors.white],\n          ),\n        ),\n        child: SingleChildScrollView(\n          padding: const EdgeInsets.all(16),\n          child: Column(\n            children: [\n              _buildProfileHeader(authProvider),\n              const SizedBox(height: 24),\n              _buildPersonalInfoSection(),\n              const SizedBox(height: 24),\n              _buildNotificationSettings(),\n              const SizedBox(height: 24),\n              _buildAccountActions(),\n            ],\n          ),\n        ),\n      ),\n    );\n  }\n\n  Widget _buildProfileHeader(AuthUserProvider authProvider) {\n    return Card(\n      elevation: 4,\n      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),\n      child: Container(\n        width: double.infinity,\n        padding: const EdgeInsets.all(24),\n        decoration: BoxDecoration(\n          borderRadius: BorderRadius.circular(16),\n          gradient: LinearGradient(\n            colors: [Colors.blue.shade600, Colors.purple.shade600],\n            begin: Alignment.topLeft,\n            end: Alignment.bottomRight,\n          ),\n        ),\n        child: Column(\n          children: [\n            Stack(\n              children: [\n                CircleAvatar(\n                  radius: 50,\n                  backgroundColor: Colors.white,\n                  child: Icon(\n                    Icons.person,\n                    size: 60,\n                    color: Colors.blue.shade600,\n                  ),\n                ),\n                Positioned(\n                  bottom: 0,\n                  right: 0,\n                  child: Container(\n                    padding: const EdgeInsets.all(4),\n                    decoration: const BoxDecoration(\n                      color: Colors.orange,\n                      shape: BoxShape.circle,\n                    ),\n                    child: const Icon(\n                      Icons.camera_alt,\n                      size: 16,\n                      color: Colors.white,\n                    ),\n                  ),\n                ),\n              ],\n            ),\n            const SizedBox(height: 16),\n            Text(\n              authProvider.userName ?? 'User',\n              style: const TextStyle(\n                color: Colors.white,\n                fontSize: 24,\n                fontWeight: FontWeight.bold,\n              ),\n            ),\n            Text(\n              authProvider.userEmail ?? 'user@example.com',\n              style: const TextStyle(\n                color: Colors.white70,\n                fontSize: 16,\n              ),\n            ),\n            const SizedBox(height: 16),\n            Row(\n              mainAxisAlignment: MainAxisAlignment.spaceEvenly,\n              children: [\n                _buildStatItem('Orders', '15', Icons.shopping_bag),\n                _buildStatItem('Wishlist', '8', Icons.favorite),\n                _buildStatItem('Points', '2,450', Icons.stars),\n              ],\n            ),\n          ],\n        ),\n      ),\n    );\n  }\n\n  Widget _buildStatItem(String label, String value, IconData icon) {\n    return Column(\n      children: [\n        Icon(icon, color: Colors.white, size: 24),\n        const SizedBox(height: 4),\n        Text(\n          value,\n          style: const TextStyle(\n            color: Colors.white,\n            fontSize: 18,\n            fontWeight: FontWeight.bold,\n          ),\n        ),\n        Text(\n          label,\n          style: const TextStyle(\n            color: Colors.white70,\n            fontSize: 12,\n          ),\n        ),\n      ],\n    );\n  }\n\n  Widget _buildPersonalInfoSection() {\n    return Card(\n      elevation: 4,\n      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),\n      child: Padding(\n        padding: const EdgeInsets.all(16),\n        child: Column(\n          crossAxisAlignment: CrossAxisAlignment.start,\n          children: [\n            const Text(\n              'Personal Information',\n              style: TextStyle(\n                fontSize: 18,\n                fontWeight: FontWeight.bold,\n              ),\n            ),\n            const SizedBox(height: 16),\n            _buildTextField(\n              controller: _nameController,\n              label: 'Full Name',\n              icon: Icons.person_outline,\n            ),\n            const SizedBox(height: 16),\n            _buildTextField(\n              controller: _emailController,\n              label: 'Email',\n              icon: Icons.email_outlined,\n              readOnly: true,\n            ),\n            const SizedBox(height: 16),\n            _buildTextField(\n              controller: _phoneController,\n              label: 'Phone Number',\n              icon: Icons.phone_outlined,\n            ),\n            const SizedBox(height: 16),\n            _buildTextField(\n              controller: _addressController,\n              label: 'Address',\n              icon: Icons.location_on_outlined,\n              maxLines: 2,\n            ),\n            const SizedBox(height: 16),\n            SizedBox(\n              width: double.infinity,\n              child: ElevatedButton(\n                onPressed: _savePersonalInfo,\n                style: ElevatedButton.styleFrom(\n                  backgroundColor: Colors.blue,\n                  foregroundColor: Colors.white,\n                  padding: const EdgeInsets.symmetric(vertical: 16),\n                  shape: RoundedRectangleBorder(\n                    borderRadius: BorderRadius.circular(12),\n                  ),\n                ),\n                child: const Text(\n                  'Save Changes',\n                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),\n                ),\n              ),\n            ),\n          ],\n        ),\n      ),\n    );\n  }\n\n  Widget _buildTextField({\n    required TextEditingController controller,\n    required String label,\n    required IconData icon,\n    bool readOnly = false,\n    int maxLines = 1,\n  }) {\n    return TextFormField(\n      controller: controller,\n      readOnly: readOnly,\n      maxLines: maxLines,\n      decoration: InputDecoration(\n        labelText: label,\n        prefixIcon: Icon(icon, color: Colors.blue),\n        border: OutlineInputBorder(\n          borderRadius: BorderRadius.circular(12),\n        ),\n        enabledBorder: OutlineInputBorder(\n          borderRadius: BorderRadius.circular(12),\n          borderSide: BorderSide(color: Colors.grey.shade300),\n        ),\n        focusedBorder: OutlineInputBorder(\n          borderRadius: BorderRadius.circular(12),\n          borderSide: const BorderSide(color: Colors.blue, width: 2),\n        ),\n        filled: true,\n        fillColor: readOnly ? Colors.grey.shade100 : Colors.white,\n      ),\n    );\n  }\n\n  Widget _buildNotificationSettings() {\n    return Card(\n      elevation: 4,\n      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),\n      child: Padding(\n        padding: const EdgeInsets.all(16),\n        child: Column(\n          crossAxisAlignment: CrossAxisAlignment.start,\n          children: [\n            const Text(\n              'Notification Preferences',\n              style: TextStyle(\n                fontSize: 18,\n                fontWeight: FontWeight.bold,\n              ),\n            ),\n            const SizedBox(height: 16),\n            _buildSwitchListTile(\n              title: 'Push Notifications',\n              subtitle: 'Get notified about orders and offers',\n              value: _notificationsEnabled,\n              onChanged: (value) => setState(() => _notificationsEnabled = value),\n              icon: Icons.notifications_outlined,\n            ),\n            _buildSwitchListTile(\n              title: 'Email Updates',\n              subtitle: 'Receive updates and offers via email',\n              value: _emailUpdates,\n              onChanged: (value) => setState(() => _emailUpdates = value),\n              icon: Icons.email_outlined,\n            ),\n            _buildSwitchListTile(\n              title: 'SMS Updates',\n              subtitle: 'Get order updates via SMS',\n              value: _smsUpdates,\n              onChanged: (value) => setState(() => _smsUpdates = value),\n              icon: Icons.sms_outlined,\n            ),\n          ],\n        ),\n      ),\n    );\n  }\n\n  Widget _buildSwitchListTile({\n    required String title,\n    required String subtitle,\n    required bool value,\n    required ValueChanged<bool> onChanged,\n    required IconData icon,\n  }) {\n    return ListTile(\n      leading: Icon(icon, color: Colors.blue),\n      title: Text(title),\n      subtitle: Text(\n        subtitle,\n        style: const TextStyle(fontSize: 12, color: Colors.grey),\n      ),\n      trailing: Switch(\n        value: value,\n        onChanged: onChanged,\n        activeColor: Colors.blue,\n      ),\n      contentPadding: EdgeInsets.zero,\n    );\n  }\n\n  Widget _buildAccountActions() {\n    return Card(\n      elevation: 4,\n      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),\n      child: Padding(\n        padding: const EdgeInsets.all(16),\n        child: Column(\n          crossAxisAlignment: CrossAxisAlignment.start,\n          children: [\n            const Text(\n              'Account Actions',\n              style: TextStyle(\n                fontSize: 18,\n                fontWeight: FontWeight.bold,\n              ),\n            ),\n            const SizedBox(height: 16),\n            _buildActionListTile(\n              icon: Icons.lock_outline,\n              title: 'Change Password',\n              subtitle: 'Update your account password',\n              onTap: _changePassword,\n            ),\n            _buildActionListTile(\n              icon: Icons.privacy_tip_outlined,\n              title: 'Privacy Settings',\n              subtitle: 'Manage your privacy preferences',\n              onTap: _openPrivacySettings,\n            ),\n            _buildActionListTile(\n              icon: Icons.help_outline,\n              title: 'Help & Support',\n              subtitle: 'Get help with your account',\n              onTap: _openSupport,\n            ),\n            _buildActionListTile(\n              icon: Icons.info_outline,\n              title: 'About',\n              subtitle: 'App version and information',\n              onTap: _showAbout,\n            ),\n            const Divider(),\n            _buildActionListTile(\n              icon: Icons.logout,\n              title: 'Logout',\n              subtitle: 'Sign out of your account',\n              onTap: _logout,\n              textColor: Colors.red,\n            ),\n          ],\n        ),\n      ),\n    );\n  }\n\n  Widget _buildActionListTile({\n    required IconData icon,\n    required String title,\n    required String subtitle,\n    required VoidCallback onTap,\n    Color? textColor,\n  }) {\n    return ListTile(\n      leading: Icon(icon, color: textColor ?? Colors.blue),\n      title: Text(\n        title,\n        style: TextStyle(color: textColor),\n      ),\n      subtitle: Text(\n        subtitle,\n        style: const TextStyle(fontSize: 12, color: Colors.grey),\n      ),\n      trailing: Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey[400]),\n      onTap: onTap,\n      contentPadding: EdgeInsets.zero,\n    );\n  }\n\n  void _savePersonalInfo() {\n    final authProvider = Provider.of<AuthUserProvider>(context, listen: false);\n    authProvider.login(_nameController.text, _emailController.text);\n    \n    ScaffoldMessenger.of(context).showSnackBar(\n      const SnackBar(\n        content: Text('Profile updated successfully!'),\n        backgroundColor: Colors.green,\n      ),\n    );\n  }\n\n  void _changePassword() {\n    showDialog(\n      context: context,\n      builder: (context) => AlertDialog(\n        title: const Text('Change Password'),\n        content: const Text('Password change feature will be available soon.'),\n        actions: [\n          TextButton(\n            onPressed: () => Navigator.pop(context),\n            child: const Text('OK'),\n          ),\n        ],\n      ),\n    );\n  }\n\n  void _openPrivacySettings() {\n    showDialog(\n      context: context,\n      builder: (context) => AlertDialog(\n        title: const Text('Privacy Settings'),\n        content: const Text('Privacy settings will be available in the next update.'),\n        actions: [\n          TextButton(\n            onPressed: () => Navigator.pop(context),\n            child: const Text('OK'),\n          ),\n        ],\n      ),\n    );\n  }\n\n  void _openSupport() {\n    showDialog(\n      context: context,\n      builder: (context) => AlertDialog(\n        title: const Text('Help & Support'),\n        content: const Column(\n          mainAxisSize: MainAxisSize.min,\n          crossAxisAlignment: CrossAxisAlignment.start,\n          children: [\n            Text('📞 Phone: +91 1800-123-4567'),\n            SizedBox(height: 8),\n            Text('📧 Email: support@ecommerce.com'),\n            SizedBox(height: 8),\n            Text('💬 Live Chat: Available 24/7'),\n            SizedBox(height: 8),\n            Text('🕒 Hours: Mon-Sun 9 AM - 9 PM'),\n          ],\n        ),\n        actions: [\n          TextButton(\n            onPressed: () => Navigator.pop(context),\n            child: const Text('Close'),\n          ),\n        ],\n      ),\n    );\n  }\n\n  void _showAbout() {\n    showDialog(\n      context: context,\n      builder: (context) => AlertDialog(\n        title: const Text('About E-Commerce App'),\n        content: const Column(\n          mainAxisSize: MainAxisSize.min,\n          crossAxisAlignment: CrossAxisAlignment.start,\n          children: [\n            Text('🛒 E-Commerce App v1.0.0'),\n            SizedBox(height: 8),\n            Text('📱 Built with Flutter'),\n            SizedBox(height: 8),\n            Text('🎨 Material Design 3'),\n            SizedBox(height: 8),\n            Text('💻 Developed by Your Team'),\n            SizedBox(height: 8),\n            Text('© 2024 All Rights Reserved'),\n          ],\n        ),\n        actions: [\n          TextButton(\n            onPressed: () => Navigator.pop(context),\n            child: const Text('Close'),\n          ),\n        ],\n      ),\n    );\n  }\n\n  void _logout() {\n    showDialog(\n      context: context,\n      builder: (context) => AlertDialog(\n        title: const Text('Logout'),\n        content: const Text('Are you sure you want to logout?'),\n        actions: [\n          TextButton(\n            onPressed: () => Navigator.pop(context),\n            child: const Text('Cancel'),\n          ),\n          TextButton(\n            onPressed: () {\n              final authProvider = Provider.of<AuthUserProvider>(context, listen: false);\n              authProvider.logout();\n              Navigator.pop(context); // Close dialog\n              Navigator.pop(context); // Go back to main app\n              ScaffoldMessenger.of(context).showSnackBar(\n                const SnackBar(\n                  content: Text('Logged out successfully'),\n                  backgroundColor: Colors.green,\n                ),\n              );\n            },\n            style: TextButton.styleFrom(foregroundColor: Colors.red),\n            child: const Text('Logout'),\n          ),\n        ],\n      ),\n    );\n  }\n\n  @override\n  void dispose() {\n    _nameController.dispose();\n    _emailController.dispose();\n    _phoneController.dispose();\n    _addressController.dispose();\n    super.dispose();\n  }\n}"
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_user_provider.dart';
+
+class ProfileSettingsPage extends StatefulWidget {
+  const ProfileSettingsPage({super.key});
+
+  @override
+  State<ProfileSettingsPage> createState() => _ProfileSettingsPageState();
+}
+
+class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _addressController = TextEditingController();
+  bool _notificationsEnabled = true;
+  bool _emailUpdates = false;
+  bool _smsUpdates = true;
+
+  @override
+  void initState() {
+    super.initState();
+    final authProvider = Provider.of<AuthUserProvider>(context, listen: false);
+    _nameController.text = authProvider.userName ?? '';
+    _emailController.text = authProvider.userEmail ?? '';
+    _phoneController.text = '+91 9876543210'; // Demo phone
+    _addressController.text = 'Demo Address, Mumbai, Maharashtra - 400001';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthUserProvider>(context);
+    
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+        title: const Text('Profile Settings'),
+        elevation: 0,
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue.shade50, Colors.white],
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              _buildProfileHeader(authProvider),
+              const SizedBox(height: 24),
+              _buildPersonalInfoSection(),
+              const SizedBox(height: 24),
+              _buildNotificationSettings(),
+              const SizedBox(height: 24),
+              _buildAccountActions(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProfileHeader(AuthUserProvider authProvider) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade600, Colors.purple.shade600],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.person,
+                    size: 60,
+                    color: Colors.blue.shade600,
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.orange,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.camera_alt,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              authProvider.userName ?? 'User',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              authProvider.userEmail ?? 'user@example.com',
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildStatItem('Orders', '15', Icons.shopping_bag),
+                _buildStatItem('Wishlist', '8', Icons.favorite),
+                _buildStatItem('Points', '2,450', Icons.stars),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatItem(String label, String value, IconData icon) {
+    return Column(
+      children: [
+        Icon(icon, color: Colors.white, size: 24),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white70,
+            fontSize: 12,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPersonalInfoSection() {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Personal Information',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildTextField(
+              controller: _nameController,
+              label: 'Full Name',
+              icon: Icons.person_outline,
+            ),
+            const SizedBox(height: 16),
+            _buildTextField(
+              controller: _emailController,
+              label: 'Email',
+              icon: Icons.email_outlined,
+              readOnly: true,
+            ),
+            const SizedBox(height: 16),
+            _buildTextField(
+              controller: _phoneController,
+              label: 'Phone Number',
+              icon: Icons.phone_outlined,
+            ),
+            const SizedBox(height: 16),
+            _buildTextField(
+              controller: _addressController,
+              label: 'Address',
+              icon: Icons.location_on_outlined,
+              maxLines: 2,
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _savePersonalInfo,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  'Save Changes',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required IconData icon,
+    bool readOnly = false,
+    int maxLines = 1,
+  }) {
+    return TextFormField(
+      controller: controller,
+      readOnly: readOnly,
+      maxLines: maxLines,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon, color: Colors.blue),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.grey.shade300),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.blue, width: 2),
+        ),
+        filled: true,
+        fillColor: readOnly ? Colors.grey.shade100 : Colors.white,
+      ),
+    );
+  }
+
+  Widget _buildNotificationSettings() {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Notification Preferences',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildSwitchListTile(
+              title: 'Push Notifications',
+              subtitle: 'Get notified about orders and offers',
+              value: _notificationsEnabled,
+              onChanged: (value) => setState(() => _notificationsEnabled = value),
+              icon: Icons.notifications_outlined,
+            ),
+            _buildSwitchListTile(
+              title: 'Email Updates',
+              subtitle: 'Receive updates and offers via email',
+              value: _emailUpdates,
+              onChanged: (value) => setState(() => _emailUpdates = value),
+              icon: Icons.email_outlined,
+            ),
+            _buildSwitchListTile(
+              title: 'SMS Updates',
+              subtitle: 'Get order updates via SMS',
+              value: _smsUpdates,
+              onChanged: (value) => setState(() => _smsUpdates = value),
+              icon: Icons.sms_outlined,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSwitchListTile({
+    required String title,
+    required String subtitle,
+    required bool value,
+    required ValueChanged<bool> onChanged,
+    required IconData icon,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.blue),
+      title: Text(title),
+      subtitle: Text(
+        subtitle,
+        style: const TextStyle(fontSize: 12, color: Colors.grey),
+      ),
+      trailing: Switch(
+        value: value,
+        onChanged: onChanged,
+        activeColor: Colors.blue,
+      ),
+      contentPadding: EdgeInsets.zero,
+    );
+  }
+
+  Widget _buildAccountActions() {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Account Actions',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildActionListTile(
+              icon: Icons.lock_outline,
+              title: 'Change Password',
+              subtitle: 'Update your account password',
+              onTap: _changePassword,
+            ),
+            _buildActionListTile(
+              icon: Icons.privacy_tip_outlined,
+              title: 'Privacy Settings',
+              subtitle: 'Manage your privacy preferences',
+              onTap: _openPrivacySettings,
+            ),
+            _buildActionListTile(
+              icon: Icons.help_outline,
+              title: 'Help & Support',
+              subtitle: 'Get help with your account',
+              onTap: _openSupport,
+            ),
+            _buildActionListTile(
+              icon: Icons.info_outline,
+              title: 'About',
+              subtitle: 'App version and information',
+              onTap: _showAbout,
+            ),
+            const Divider(),
+            _buildActionListTile(
+              icon: Icons.logout,
+              title: 'Logout',
+              subtitle: 'Sign out of your account',
+              onTap: _logout,
+              textColor: Colors.red,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionListTile({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+    Color? textColor,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: textColor ?? Colors.blue),
+      title: Text(
+        title,
+        style: TextStyle(color: textColor),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: const TextStyle(fontSize: 12, color: Colors.grey),
+      ),
+      trailing: Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey[400]),
+      onTap: onTap,
+      contentPadding: EdgeInsets.zero,
+    );
+  }
+
+  void _savePersonalInfo() {
+    final authProvider = Provider.of<AuthUserProvider>(context, listen: false);
+    authProvider.login(_nameController.text, _emailController.text);
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Profile updated successfully!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
+  void _changePassword() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Change Password'),
+        content: const Text('Password change feature will be available soon.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _openPrivacySettings() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Privacy Settings'),
+        content: const Text('Privacy settings will be available in the next update.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _openSupport() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Help & Support'),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('📞 Phone: +91 1800-123-4567'),
+            SizedBox(height: 8),
+            Text('📧 Email: support@ecommerce.com'),
+            SizedBox(height: 8),
+            Text('💬 Live Chat: Available 24/7'),
+            SizedBox(height: 8),
+            Text('🕒 Hours: Mon-Sun 9 AM - 9 PM'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showAbout() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('About E-Commerce App'),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('🛒 E-Commerce App v1.0.0'),
+            SizedBox(height: 8),
+            Text('📱 Built with Flutter'),
+            SizedBox(height: 8),
+            Text('🎨 Material Design 3'),
+            SizedBox(height: 8),
+            Text('💻 Developed by Your Team'),
+            SizedBox(height: 8),
+            Text('© 2024 All Rights Reserved'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _logout() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              final authProvider = Provider.of<AuthUserProvider>(context, listen: false);
+              authProvider.logout();
+              Navigator.pop(context); // Close dialog
+              Navigator.pop(context); // Go back to main app
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Logged out successfully'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
+    super.dispose();
+  }
+}
