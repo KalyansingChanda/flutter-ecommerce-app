@@ -29,7 +29,35 @@ class Product {
     );
   }
 
+  // Firebase-specific factory method
+  factory Product.fromFirestore(dynamic doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    return Product(
+      id: doc.id,
+      name: data['name'] ?? '',
+      price: (data['price'] ?? 0).toDouble(),
+      description: data['description'] ?? '',
+      imageUrl: data['imageUrl'] ?? '',
+      category: data['category'] ?? 'General',
+      createdAt: data['createdAt'] != null 
+          ? DateTime.fromMillisecondsSinceEpoch(data['createdAt'])  
+          : DateTime.now(),
+    );
+  }
+
   Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'price': price,
+      'description': description,
+      'imageUrl': imageUrl,
+      'category': category,
+      'createdAt': createdAt.millisecondsSinceEpoch,
+    };
+  }
+
+  // Firebase-specific toMap for Firestore
+  Map<String, dynamic> toFirestore() {
     return {
       'name': name,
       'price': price,

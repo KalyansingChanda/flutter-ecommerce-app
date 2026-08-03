@@ -10,7 +10,20 @@ dependencies:
   flutter:
     sdk: flutter
   
-  # Core packages only - no Firebase for now
+  # Note: Firebase packages removed due to web incompatibility
+  # For Android/iOS builds, add back:
+  # firebase_core: ^2.24.2
+  # cloud_firestore: ^4.14.0
+  # firebase_storage: ^11.6.0
+  # firebase_auth: ^4.15.3
+  
+  # Image handling
+  image_picker: ^1.0.7
+  
+  # Local storage for cart persistence
+  shared_preferences: ^2.2.2
+  
+  # Core packages
   provider: ^6.0.5
   cupertino_icons: ^1.0.2
   
