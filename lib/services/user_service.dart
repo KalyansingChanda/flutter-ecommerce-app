@@ -1,5 +1,4 @@
 import '../models/user.dart';
-import '../utils/constants.dart';
 
 class UserService {
   // Mock service for non-Firebase version

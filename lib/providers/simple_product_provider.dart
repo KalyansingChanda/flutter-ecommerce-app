@@ -5,16 +5,20 @@ class SimpleProduct {
   final String name;
   final String description;
   final double price;
+  final double originalPrice;
   final String imageUrl;
   final String category;
+  final int discountPercent;
 
   SimpleProduct({
     required this.id,
     required this.name,
     required this.description,
     required this.price,
+    required this.originalPrice,
     required this.imageUrl,
     required this.category,
+    this.discountPercent = 0,
   });
 }
 
@@ -23,56 +27,62 @@ class SimpleProductProvider with ChangeNotifier {
 
   List<SimpleProduct> get products => _products;
 
+  SimpleProductProvider() {
+    addSampleProducts();
+  }
+
   void addSampleProducts() {
     _products.clear();
     _products.addAll([
       SimpleProduct(
         id: '1',
-        name: 'Smartphone',
-        description: 'Latest Android smartphone with amazing features',
-        price: 15999.0,
-        imageUrl: 'https://via.placeholder.com/300x300?text=Phone',
+        name: 'Galaxy S22 Ultra',
+        description: 'Samsung Galaxy S22 Ultra 5G',
+        price: 32999.0,
+        originalPrice: 74999.0,
+        imageUrl: 'https://m.media-amazon.com/images/I/61cgGppG2ZL._AC_SX522_.jpg',
         category: 'Electronics',
+        discountPercent: 56,
       ),
       SimpleProduct(
         id: '2',
-        name: 'Laptop',
-        description: 'High performance laptop for work and gaming',
-        price: 45999.0,
-        imageUrl: 'https://via.placeholder.com/300x300?text=Laptop',
+        name: 'Galaxy M13 (4GB | 64 GB)',
+        description: 'Samsung Galaxy M13 Android Smartphone',
+        price: 10499.0,
+        originalPrice: 14999.0,
+        imageUrl: 'https://m.media-amazon.com/images/I/71Y2P1DSLdL._AC_SX522_.jpg',
         category: 'Electronics',
+        discountPercent: 56,
       ),
       SimpleProduct(
         id: '3',
-        name: 'T-Shirt',
-        description: 'Comfortable cotton t-shirt in various colors',
-        price: 599.0,
-        imageUrl: 'https://via.placeholder.com/300x300?text=T-Shirt',
-        category: 'Clothing',
+        name: 'Galaxy M33 (4GB | 64 GB)',
+        description: 'Samsung Galaxy M33 5G Smartphone',
+        price: 16999.0,
+        originalPrice: 24999.0,
+        imageUrl: 'https://m.media-amazon.com/images/I/71vBQpYHuWL._AC_SX522_.jpg',
+        category: 'Electronics',
+        discountPercent: 56,
       ),
       SimpleProduct(
         id: '4',
-        name: 'Headphones',
-        description: 'Wireless Bluetooth headphones with noise cancellation',
-        price: 2999.0,
-        imageUrl: 'https://via.placeholder.com/300x300?text=Headphones',
+        name: 'Galaxy M53 (4GB | 64 GB)',
+        description: 'Samsung Galaxy M53 5G Smartphone',
+        price: 31999.0,
+        originalPrice: 40999.0,
+        imageUrl: 'https://m.media-amazon.com/images/I/61nzB9CQFNL._AC_SX522_.jpg',
         category: 'Electronics',
+        discountPercent: 56,
       ),
       SimpleProduct(
         id: '5',
-        name: 'Watch',
-        description: 'Smart watch with fitness tracking',
-        price: 8999.0,
-        imageUrl: 'https://via.placeholder.com/300x300?text=Watch',
+        name: 'Galaxy S22 Ultra',
+        description: 'Samsung Galaxy S22 Ultra 5G Phantom Green',
+        price: 67999.0,
+        originalPrice: 86999.0,
+        imageUrl: 'https://m.media-amazon.com/images/I/61F-mFacPdL._AC_SX522_.jpg',
         category: 'Electronics',
-      ),
-      SimpleProduct(
-        id: '6',
-        name: 'Shoes',
-        description: 'Comfortable running shoes',
-        price: 1999.0,
-        imageUrl: 'https://via.placeholder.com/300x300?text=Shoes',
-        category: 'Footwear',
+        discountPercent: 56,
       ),
     ]);
     notifyListeners();

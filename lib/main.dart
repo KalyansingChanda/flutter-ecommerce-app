@@ -3,13 +3,18 @@ import 'package:provider/provider.dart';
 import 'providers/simple_product_provider.dart';
 import 'providers/simple_cart_provider.dart';
 import 'utils/theme.dart';
+import 'screens/auth/login_screen.dart';
+import 'screens/profile/orders_page.dart';
+import 'screens/profile/wishlist_page.dart';
+import 'screens/profile/rewards_page.dart';
+import 'screens/profile/profile_settings_page.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: {
           '/login': (context) => const LoginScreen(),
-          '/signup': (context) => const SignupScreen(),
           '/orders': (context) => const OrdersPage(),
           '/wishlist': (context) => const WishlistPage(),
           '/rewards': (context) => const RewardsPage(),
@@ -62,7 +66,7 @@ class AuthUserProvider extends ChangeNotifier {
 }
 
 class ECommerceHome extends StatefulWidget {
-  const ECommerceHome({super.key});
+  const ECommerceHome({Key? key}) : super(key: key);
 
   @override
   State<ECommerceHome> createState() => _ECommerceHomeState();

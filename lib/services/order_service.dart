@@ -1,5 +1,4 @@
 import '../models/order.dart' as app_order;
-import '../utils/constants.dart';
 
 class OrderService {
   // Mock service for non-Firebase version
